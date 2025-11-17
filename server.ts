@@ -30,7 +30,8 @@ app.use(express.json());
 // -------------- CORS CORRIGIDO --------------
 app.use(
   cors({
-    origin: "https://csv-to-json-converter-rouge.vercel.app",
+    origin: "*",
+    // origin: "https://csv-to-json-converter-rouge.vercel.app",
     methods: ["GET", "POST"],
     allowedHeaders: ["Content-Type"],
   })
