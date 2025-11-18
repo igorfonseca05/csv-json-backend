@@ -1,0 +1,227 @@
+ body {
+     font-family: 'Inter', sans-serif;
+     background-color: #111022;
+     /* dark:bg-background-dark */
+     color: #d1d5db;
+     /* text-gray-200 */
+     margin: 0;
+ }
+
+ .container-root {
+     position: relative;
+     display: flex;
+     height: auto;
+     min-height: 100vh;
+     width: 100%;
+     flex-direction: column;
+     overflow-x: hidden;
+ }
+
+ .layout-container {
+     display: flex;
+     height: 100%;
+     flex-grow: 1;
+     flex-direction: column;
+ }
+
+ main {
+     display: flex;
+     flex: 1;
+     justify-content: center;
+     padding: 40px 0;
+     /* py-10 sm:py-20 */
+ }
+
+ .layout-content-container {
+     display: flex;
+     flex-direction: column;
+     max-width: 960px;
+     flex: 1;
+     padding: 0 16px;
+     /* px-4 sm:px-6 md:px-8 */
+ }
+
+ .heading-section {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: center;
+     text-align: center;
+     margin-bottom: 48px;
+     /* mb-12 */
+ }
+
+ .main-heading {
+     color: #e61414;
+     /* text-white */
+     font-size: 36px;
+     /* 4xl */
+     font-weight: 900;
+     /* font-black */
+     line-height: 1.2;
+     letter-spacing: -0.033em;
+ }
+
+ .sub-heading {
+     color: #9492c9;
+     /* text-[#9492c9] */
+     font-size: 18px;
+     /* sm:text-lg */
+     font-weight: 400;
+     line-height: 1.5;
+     margin-top: 12px;
+     /* mt-3 */
+     max-width: 640px;
+     /* max-w-2xl */
+ }
+
+ .main-card-wrapper {
+     width: 100%;
+     max-width: 800px;
+     /* max-w-4xl */
+     margin: 0 auto 48px;
+     /* mx-auto mb-12 */
+ }
+
+ .main-card {
+     display: flex;
+     flex-direction: column;
+     align-items: stretch;
+     justify-content: flex-start;
+     border-radius: 12px;
+     /* rounded-xl */
+     padding: 24px 32px;
+     /* p-6 sm:p-8 */
+     /* Simulação dos estilos custom-card-bg e custom-border-glow */
+     background-color: rgba(0, 255, 51, 0.05);
+     border: 1px solid #00ff33;
+     box-shadow: 0 0 8px 0 rgba(0, 255, 51, 0.3);
+ }
+
+ .card-content {
+     display: flex;
+     width: 100%;
+     min-width: 288px;
+     /* min-w-72 */
+     flex-grow: 1;
+     flex-direction: column;
+     align-items: flex-start;
+     justify-content: center;
+     gap: 8px;
+     /* gap-2 */
+ }
+
+ .card-title {
+     color: #ffffff;
+     /* text-white */
+     font-size: 24px;
+     /* sm:text-2xl */
+     font-weight: 700;
+     /* font-bold */
+     line-height: 1.25;
+     letter-spacing: -0.015em;
+ }
+
+ .card-description {
+     color: #9492c9;
+     /* text-[#9492c9] */
+     font-size: 16px;
+     /* text-base */
+     font-weight: 400;
+     line-height: 1.5;
+ }
+
+ .stats-section {
+     display: flex;
+     flex-wrap: wrap;
+     gap: 16px;
+     /* gap-4 sm:gap-6 */
+     justify-content: center;
+ }
+
+ .stat-card {
+     display: flex;
+     min-width: 158px;
+     flex: 1;
+     flex-direction: column;
+     gap: 8px;
+     /* gap-2 */
+     border-radius: 8px;
+     /* rounded-lg */
+     padding: 24px;
+     /* p-6 */
+     border: 1px solid #343267;
+     /* border-[#343267] */
+     background-color: rgba(26, 25, 54, 0.5);
+     /* bg-[#1a1936]/50 */
+ }
+
+ .stat-label {
+     color: #ffffff;
+     /* text-white */
+     font-size: 16px;
+     /* text-base */
+     font-weight: 500;
+     line-height: 1.5;
+ }
+
+ .stat-value-large {
+     color: #6964f2;
+     /* text-[#6964f2] */
+     font-size: 24px;
+     /* text-2xl */
+     font-weight: 700;
+     line-height: 1.25;
+ }
+
+ .stat-value-status {
+     color: #4ade80;
+     /* text-green-400 */
+     font-size: 24px;
+     /* text-2xl */
+     font-weight: 700;
+     line-height: 1.25;
+ }
+
+ .stat-value-tech {
+     color: #ffffff;
+     /* text-white */
+     font-size: 20px;
+     /* sm:text-xl */
+     font-weight: 700;
+     line-height: 1.25;
+ }
+
+ footer {
+     display: flex;
+     flex-direction: column;
+     gap: 24px;
+     /* gap-6 */
+     padding: 40px 20px;
+     /* px-5 py-10 */
+     text-align: center;
+ }
+
+ .footer-text {
+     color: rgba(148, 146, 201, 0.6);
+     /* text-[#9492c9]/60 */
+     font-size: 16px;
+     /* sm:text-base */
+     font-weight: 400;
+     line-height: 1.5;
+ }
+
+ /* Media Query básico para simular responsividade de "sm" */
+ @media (min-width: 640px) {
+     .main-heading {
+         font-size: 48px;
+     }
+
+     main {
+         padding: 80px 0;
+     }
+
+     .layout-content-container {
+         padding: 0 24px;
+     }
+ }

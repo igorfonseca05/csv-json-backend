@@ -4,11 +4,11 @@ import cors from "cors";
 import multer from "multer";
 import path from "path";
 import csv from "csv-parser";
-import { createReadStream } from "fs";
 import fs from "fs";
 import { uid } from "uid";
 
 const app = express();
+const publicPath = path.join(__dirname, "public");
 
 const storage = multer.diskStorage({
   destination: "uploads/",
@@ -24,26 +24,24 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 const port = process.env.PORT ? Number(process.env.PORT) : 3000;
 
-
 app.use(express.json());
+app.use(express.static(publicPath));
 
-// -------------- CORS CORRIGIDO --------------
 app.use(
   cors({
-    origin: "*",
-    // origin: "https://csv-to-json-converter-rouge.vercel.app",
+    // origin: "*",
+    origin: "https://csv-to-json-converter-rouge.vercel.app",
     methods: ["GET", "POST"],
     allowedHeaders: ["Content-Type"],
   })
 );
 
-// Necessário para SSE funcionar no Render
 app.set("trust proxy", true);
 
 export const clients: Record<string, any> = {};
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Servidor TypeScript no ar! 🚀");
+  res.sendFile(path.join(publicPath, "index.html"));
 });
 
 app.get("/events", (req, res) => {
@@ -56,7 +54,7 @@ app.get("/events", (req, res) => {
   res.setHeader("X-Accel-Buffering", "no"); // MUITO IMPORTANTE
   res.flushHeaders();
 
-  // Manda um "ping" para o cliente aceitar a conexão
+  // Manda um "ping" para iniciar conexão com cliente
   res.write(`event: connected\ndata: ok\n\n`);
 
   clients[jobID] = res;
@@ -66,7 +64,11 @@ app.get("/events", (req, res) => {
   });
 });
 
-async function fileProcessor(filePath: string, jobID: string, fileSize?: number) {
+async function fileProcessor(
+  filePath: string,
+  jobID: string,
+  fileSize?: number
+) {
   while (!clients[jobID]) {
     await new Promise((r) => setTimeout(r, 50));
   }
@@ -111,29 +113,33 @@ async function fileProcessor(filePath: string, jobID: string, fileSize?: number)
     });
 }
 
-app.post("/upload", upload.single("file"), async (req: Request, res: Response) => {
-  const filePath = req.file?.path;
-  const jobID = uid();
+app.post(
+  "/upload",
+  upload.single("file"),
+  async (req: Request, res: Response) => {
+    const filePath = req.file?.path;
+    const jobID = uid();
 
-  if (!filePath)
-    return res.status(400).json({ message: "Erro ao obter arquivo" });
+    if (!filePath)
+      return res.status(400).json({ message: "Erro ao obter arquivo" });
 
-  const ext = path.extname(filePath);
+    const ext = path.extname(filePath);
 
-  if (ext !== ".csv")
-    return res.status(400).json({
-      message: "Formato inválido. Envie apenas arquivos CSV.",
-      status: "error",
+    if (ext !== ".csv")
+      return res.status(400).json({
+        message: "Formato inválido. Envie apenas arquivos CSV.",
+        status: "error",
+      });
+
+    res.json({
+      message: "Processamento iniciado",
+      status: "processing",
+      jobID,
     });
 
-  res.json({
-    message: "Processamento iniciado",
-    status: "processing",
-    jobID,
-  });
-
-  process.nextTick(() => fileProcessor(filePath, jobID, req.file?.size));
-});
+    process.nextTick(() => fileProcessor(filePath, jobID, req.file?.size));
+  }
+);
 
 app.listen(port, () => {
   console.log(`Servidor rodando em http://localhost:${port}`);
